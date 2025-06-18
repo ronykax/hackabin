@@ -19,15 +19,28 @@ type Snippet struct {
 }
 
 var addCmd = &cobra.Command{
-	Use:   "add <title> <language> <code>",
-	Short: "Add a new code snippet",
+	Use:   "add <title> <language> <code|file>",
+	Short: "Add a new code snippet (inline or from file)",
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
+		title := strings.TrimSpace(args[0])
+		lang := strings.TrimSpace(args[1])
+		codeInput := strings.TrimSpace(args[2])
+		var code string
+
+		if fileContent, err := os.ReadFile(codeInput); err == nil {
+			// If it's a valid file path, use file content
+			code = string(fileContent)
+		} else {
+			// Otherwise, treat it as inline code
+			code = codeInput
+		}
+
 		snippet := Snippet{
 			ID:        fmt.Sprintf("%d", time.Now().UnixNano()),
-			Title:     strings.TrimSpace(args[0]),
-			Language:  strings.TrimSpace(args[1]),
-			Code:      strings.TrimSpace(args[2]),
+			Title:     title,
+			Language:  lang,
+			Code:      code,
 			CreatedAt: time.Now().Format(time.RFC3339),
 		}
 
