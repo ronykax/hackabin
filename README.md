@@ -13,6 +13,6 @@ just download the binary for your OS from the [`build/`](https://github.com/rony
 
 ## building
 follow the steps below if you prefer building the binary for your OS yourself:
-1. download and install a non-ancient version [golang](https://go.dev/doc/install) on your computer
-2. clone this repo and go to that directory
-3. run `go build -o hackabin` and you will see a `hackabin` or `hackabin.exe` file appear in the current directory!
+1. download and install a non-ancient version of [golang](https://go.dev/doc/install) on your computer
+2. clone this repo and go into the directory
+3. run `go build -o hackabin` and you will see a `hackabin` or `hackabin.exe` file appear in that directory!
