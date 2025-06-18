@@ -7,29 +7,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var note string
+var ascii = `
+ _                _         _     _       
+| |__   __ _  ___| | ____ _| |__ (_)_ __  
+| '_ \ / _` + "`" + ` |/ __| |/ / _` + "`" + ` | '_ \| | '_ \ 
+| | | | (_| | (__|   < (_| | |_) | | | | |
+|_| |_|\__,_|\___|_|\_\__,_|_.__/|_|_| |_|
+
+`
 
 var rootCmd = &cobra.Command{
-	Use:   "hackabin [file]",
-	Short: "Upload a code file with context",
-	Args:  cobra.ExactArgs(1),
+	Use:   "hackabin",
+	Short: "Your terminal-friendly code snippet manager",
+	Long: ascii + `Hackabin is a CLI tool to save, search, and manage your code snippets with context.
+Use "hackabin add" to save a new snippet or "hackabin search" to find one.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		file := args[0]
-
-		content, err := os.ReadFile(file)
-		if err != nil {
-			fmt.Println("Error reading file:", err)
-			os.Exit(1)
-		}
-
-		fmt.Println("Note:", note)
-		fmt.Println("Contents of", file+":\n")
-		fmt.Println(string(content))
+		// show help if no subcommand is provided
+		_ = cmd.Help()
 	},
-}
-
-func init() {
-	rootCmd.Flags().StringVar(&note, "note", "", "Optional note about the code snippet")
 }
 
 func Execute() {
