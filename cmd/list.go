@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -20,9 +21,7 @@ var listCmd = &cobra.Command{
 		}
 
 		for _, s := range snippets {
-			createdAt, _ := time.Parse(time.RFC3339, s.CreatedAt)
-			fmt.Printf("🆔 %s\n📌 %s [%s]\n📅 %s\n\n",
-				s.ID, s.Title, s.Language, createdAt.Format("Jan 2, 2006 3:04PM"))
+			printSnippet(s.ID, s.Title, s.Language, s.Code, s.CreatedAt)
 		}
 	},
 }
@@ -43,4 +42,29 @@ func loadSnippets() []Snippet {
 	var snippets []Snippet
 	_ = json.Unmarshal(data, &snippets)
 	return snippets
+}
+
+// styles ahh
+var titleStyle = lipgloss.NewStyle().
+	Bold(true).
+	Foreground(lipgloss.Color("#7D56F4")).
+	Padding(0, 1)
+
+var metaStyle = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#888")).
+	Padding(0, 1)
+
+var codeStyle = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#00FF9F")).
+	Border(lipgloss.NormalBorder()).
+	Padding(1, 2).
+	Margin(1, 0)
+
+func printSnippet(id, title, lang, code, date string) {
+	parsedTime, _ := time.Parse(time.RFC3339, date)
+	dateStr := parsedTime.Format("Jan 2, 2006 3:04PM")
+
+	fmt.Println(titleStyle.Render("📌 " + title))
+	fmt.Println(metaStyle.Render("ID: " + id + " • " + lang + " • " + dateStr))
+	fmt.Println(codeStyle.Render(code))
 }
