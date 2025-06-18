@@ -21,7 +21,7 @@ var listCmd = &cobra.Command{
 		}
 
 		for _, s := range snippets {
-			printSnippet(s.ID, s.Title, s.Language, s.Code, s.CreatedAt)
+			printSnippet(s.ID, s.Title, s.Code, s.CreatedAt)
 		}
 	},
 }
@@ -48,7 +48,7 @@ func loadSnippets() []Snippet {
 var titleStyle = lipgloss.NewStyle().
 	Bold(true).
 	Foreground(lipgloss.Color("#7D56F4")).
-	Padding(0, 2)
+	Padding(1, 2, 0, 2)
 
 var metaStyle = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#888")).
@@ -58,13 +58,13 @@ var codeStyle = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#00FF9F")).
 	Border(lipgloss.NormalBorder()).
 	Padding(1, 2).
-	Margin(0, 2, 2, 2)
+	Margin(0, 2, 1, 2)
 
-func printSnippet(id, title, lang, code, date string) {
+func printSnippet(id, title, code, date string) {
 	parsedTime, _ := time.Parse(time.RFC3339, date)
 	dateStr := parsedTime.Format("Jan 2, 2006 3:04PM")
 
 	fmt.Println(titleStyle.Render("📚 " + title))
-	fmt.Println(metaStyle.Render(id + " • " + lang + " • " + dateStr))
+	fmt.Println(metaStyle.Render(id + " • " + dateStr))
 	fmt.Println(codeStyle.Render(code))
 }

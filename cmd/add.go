@@ -13,7 +13,6 @@ import (
 type Snippet struct {
 	ID        string `json:"id"`
 	Title     string `json:"title"`
-	Language  string `json:"language"`
 	Code      string `json:"code"`
 	CreatedAt string `json:"created_at"`
 }
@@ -24,8 +23,7 @@ var addCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
 		title := strings.TrimSpace(args[0])
-		lang := strings.TrimSpace(args[1])
-		codeInput := strings.TrimSpace(args[2])
+		codeInput := strings.TrimSpace(args[1])
 		var code string
 
 		if fileContent, err := os.ReadFile(codeInput); err == nil {
@@ -39,7 +37,6 @@ var addCmd = &cobra.Command{
 		snippet := Snippet{
 			ID:        fmt.Sprintf("%d", time.Now().UnixNano()),
 			Title:     title,
-			Language:  lang,
 			Code:      code,
 			CreatedAt: time.Now().Format(time.RFC3339),
 		}

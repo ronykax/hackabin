@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -16,6 +17,13 @@ var removeCmd = &cobra.Command{
 		id := args[0]
 		snippets := loadSnippets()
 
+		if len(snippets) == 0 {
+			ascii := loadASCIISticker("stickers/orphmoji_scared.txt")
+			fmt.Println("❌ No snippets found.")
+			fmt.Println(ascii)
+			return
+		}
+
 		index := -1
 		for i, s := range snippets {
 			if s.ID == id {
@@ -25,14 +33,16 @@ var removeCmd = &cobra.Command{
 		}
 
 		if index == -1 {
+			ascii := loadASCIISticker("stickers/orphmoji_scared.txt")
 			fmt.Println("❌ Snippet not found.")
+			fmt.Println(ascii)
 			return
 		}
 
 		snippets = append(snippets[:index], snippets[index+1:]...)
 		saveAllSnippets(snippets)
 
-		fmt.Println("🗑️ Snippet removed.")
+		fmt.Println("🗑️  Snippet removed.")
 	},
 }
 
@@ -46,4 +56,12 @@ func saveAllSnippets(snippets []Snippet) {
 
 	newData, _ := json.MarshalIndent(snippets, "", "  ")
 	_ = os.WriteFile(file, newData, 0644)
+}
+
+func loadASCIISticker(path string) string {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "(missing ascii art)"
+	}
+	return strings.TrimSpace(string(data))
 }
