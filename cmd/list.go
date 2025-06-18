@@ -48,23 +48,23 @@ func loadSnippets() []Snippet {
 var titleStyle = lipgloss.NewStyle().
 	Bold(true).
 	Foreground(lipgloss.Color("#7D56F4")).
-	Padding(0, 1)
+	Padding(0, 2)
 
 var metaStyle = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#888")).
-	Padding(0, 1)
+	Padding(0, 2)
 
 var codeStyle = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#00FF9F")).
 	Border(lipgloss.NormalBorder()).
 	Padding(1, 2).
-	Margin(1, 0)
+	Margin(0, 2, 2, 2)
 
 func printSnippet(id, title, lang, code, date string) {
 	parsedTime, _ := time.Parse(time.RFC3339, date)
 	dateStr := parsedTime.Format("Jan 2, 2006 3:04PM")
 
-	fmt.Println(titleStyle.Render("📌 " + title))
-	fmt.Println(metaStyle.Render("ID: " + id + " • " + lang + " • " + dateStr))
+	fmt.Println(titleStyle.Render("📚 " + title))
+	fmt.Println(metaStyle.Render(id + " • " + lang + " • " + dateStr))
 	fmt.Println(codeStyle.Render(code))
 }
