@@ -61,7 +61,7 @@ func saveAllSnippets(snippets []Snippet) {
 func loadASCIISticker(path string) string {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return "(missing ascii art)"
+		return ""
 	}
 	return strings.TrimSpace(string(data))
 }
