@@ -64,7 +64,7 @@ func printSnippet(id, title, code, date string) {
 	parsedTime, _ := time.Parse(time.RFC3339, date)
 	dateStr := parsedTime.Format("Jan 2, 2006 3:04PM")
 
-	fmt.Println(titleStyle.Render("📚 " + title))
+	fmt.Println(titleStyle.Render(title))
 	fmt.Println(metaStyle.Render(id + " • " + dateStr))
 	fmt.Println(codeStyle.Render(code))
 }

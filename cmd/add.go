@@ -18,7 +18,7 @@ type Snippet struct {
 }
 
 var addCmd = &cobra.Command{
-	Use:   "add <title> <language> <code|file>",
+	Use:   "add <title> <code|file>",
 	Short: "Add a new code snippet (inline or from file)",
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
