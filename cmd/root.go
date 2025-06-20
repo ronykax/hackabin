@@ -18,7 +18,7 @@ var ascii = `
 
 var rootCmd = &cobra.Command{
 	Use:   "hackabin",
-	Short: "Your terminal-friendly code snippet manager",
+	Short: "CLI app to save code snippets",
 	Long: ascii + `Hackabin is a CLI tool to save, search, and manage your code snippets with context.
 Use "hackabin add" to save a new snippet or "hackabin search" to find one.`,
 	Run: func(cmd *cobra.Command, args []string) {
