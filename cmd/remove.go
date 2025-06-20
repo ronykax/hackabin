@@ -6,8 +6,25 @@ import (
 	"os"
 	"strings"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
+
+const orphmoji_scared = `
+            ....:::. .              
+          .:+;......;;.;:..         
+      ...:;:....:+;;..::..;+:..     
+    .:+;;..::...;:..;:::......;+:. .
+  .;;..:;...:..;;...;:.;..........+.
+.+;....;:;;;....::;;:...:;+:......+.
+.+:...:;...............  .+......;: 
+.:;...;+;:.......:;...;..+:.....+:  
+  ;;...:;..::+::......+.+......+.   
+  .;;....;:..+........++.....;;.    
+   .:+.....+:;.........:....+.      
+    ..;;....:.............;.        
+      ..;:.................         
+`
 
 var removeCmd = &cobra.Command{
 	Use:   "remove <id>",
@@ -18,7 +35,7 @@ var removeCmd = &cobra.Command{
 		snippets := loadSnippets()
 
 		if len(snippets) == 0 {
-			ascii := loadASCIISticker("stickers/orphmoji_scared.txt")
+			ascii = orphmoji_scared
 			fmt.Println("❌ No snippets found.")
 			fmt.Println(ascii)
 			return
@@ -33,8 +50,8 @@ var removeCmd = &cobra.Command{
 		}
 
 		if index == -1 {
-			ascii := loadASCIISticker("stickers/orphmoji_scared.txt")
-			fmt.Println("❌ Snippet not found.")
+			ascii = orphmoji_scared
+			fmt.Println(lipgloss.NewStyle().SetString("Snippet not found.").Foreground(lipgloss.Color("#ec3750")).Italic(true).Bold(true))
 			fmt.Println(ascii)
 			return
 		}
@@ -42,7 +59,7 @@ var removeCmd = &cobra.Command{
 		snippets = append(snippets[:index], snippets[index+1:]...)
 		saveAllSnippets(snippets)
 
-		fmt.Println("🗑️  Snippet removed.")
+		fmt.Println(lipgloss.NewStyle().SetString("Snippet removed.").Foreground(lipgloss.Color("#ec3750")).Italic(true).Bold(true))
 	},
 }
 

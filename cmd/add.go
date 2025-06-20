@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +21,7 @@ type Snippet struct {
 var addCmd = &cobra.Command{
 	Use:   "add <title> <code|file>",
 	Short: "Add a new code snippet (inline or from file)",
-	Args:  cobra.ExactArgs(3),
+	Args:  cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 		title := strings.TrimSpace(args[0])
 		codeInput := strings.TrimSpace(args[1])
@@ -34,15 +35,30 @@ var addCmd = &cobra.Command{
 			code = codeInput
 		}
 
+		var theID = fmt.Sprintf("%d", time.Now().UnixNano())
+
 		snippet := Snippet{
-			ID:        fmt.Sprintf("%d", time.Now().UnixNano()),
+			ID:        theID,
 			Title:     title,
 			Code:      code,
 			CreatedAt: time.Now().Format(time.RFC3339),
 		}
 
 		saveSnippet(snippet)
-		fmt.Println("✅ Snippet saved!")
+
+		msg := lipgloss.NewStyle().
+			Italic(true).
+			Bold(true).
+			Foreground(lipgloss.Color("#33d6a6")).
+			SetString("Snippet saved!")
+
+		codee := lipgloss.NewStyle().
+			Border(lipgloss.NormalBorder()).
+			SetString(code).Padding(0, 1)
+
+		fmt.Println(msg)
+		fmt.Println(theID)
+		fmt.Println(codee)
 	},
 }
 

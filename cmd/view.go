@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/atotto/clipboard"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +18,7 @@ var viewCmd = &cobra.Command{
 		snippets := loadSnippets()
 
 		if len(snippets) == 0 {
-			ascii := loadASCIISticker("stickers/orphmoji_scared.txt")
+			ascii = orphmoji_scared
 			fmt.Println("❌ No snippets found.")
 			fmt.Println(ascii)
 			return
@@ -32,8 +33,8 @@ var viewCmd = &cobra.Command{
 			}
 		}
 
-		ascii := loadASCIISticker("stickers/orphmoji_confused.txt")
-		fmt.Println("❌ Snippet not found.")
+		ascii := orphmoji_scared
+		fmt.Println(lipgloss.NewStyle().SetString("Snippet not found.").Foreground(lipgloss.Color("#ec3750")).Italic(true).Bold(true))
 		fmt.Println(ascii)
 	},
 }
